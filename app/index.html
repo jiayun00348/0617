@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>宜蘭三天兩夜行程規畫</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: linear-gradient(180deg, #eef7ff, #f7fbf2);
+      --card: #ffffff;
+      --text: #1f2a37;
+      --muted: #526072;
+      --primary: #2563eb;
+      --primary-soft: #e5eefc;
+      --border: #d8e4f0;
+      --tag-bg: #ecfeff;
+      --tag-text: #155e75;
+      --accent: #0f766e;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .hero,
+    .panel,
+    .result {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+    }
+
+    .hero p,
+    .note,
+    .summary,
+    .spot {
+      line-height: 1.75;
+    }
+
+    .hero p,
+    .note {
+      color: var(--muted);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .option-group h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #f8fbff;
+      cursor: pointer;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--primary-soft);
+      color: #1e3a8a;
+    }
+
+    .summary {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+    }
+
+    .quick-picks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .quick-card {
+      background: #f8fbff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .quick-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .day {
+      border-left: 5px solid #60a5fa;
+      padding-left: 16px;
+      margin: 20px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      color: #64748b;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>宜蘭三天兩夜行程規畫器</h1>
+      <p>
+        依照你的旅遊偏好，快速產生適合的 <span class="highlight">宜蘭三天兩夜</span>
+        行程。你可以選擇旅遊步調、同行對象、主題偏好與交通方式，畫面會即時整理建議路線。
+      </p>
+      <div class="quick-picks">
+        <div class="quick-card">
+          <strong>適合情侶</strong>
+          海景散步、景觀咖啡、溫泉旅宿
+        </div>
+        <div class="quick-card">
+          <strong>適合親子</strong>
+          農場互動、短程步道、夜市輕鬆吃
+        </div>
+        <div class="quick-card">
+          <strong>宜蘭精華區</strong>
+          礁溪、宜蘭市、羅東、冬山、蘇澳
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="grid">
+        <div class="option-group">
+          <h3>旅遊步調</h3>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="pace" value="輕鬆慢遊" checked /> 輕鬆慢遊</label>
+            <label class="chip"><input type="radio" name="pace" value="經典踩點" /> 經典踩點</label>
+            <label class="chip"><input type="radio" name="pace" value="親子悠閒" /> 親子悠閒</label>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <h3>同行對象</h3>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="group" value="情侶" checked /> 情侶</label>
+            <label class="chip"><input type="radio" name="group" value="朋友" /> 朋友</label>
+            <label class="chip"><input type="radio" name="group" value="親子家庭" /> 親子家庭</label>
+            <label class="chip"><input type="radio" name="group" value="長輩同行" /> 長輩同行</label>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <h3>偏好主題（可複選）</h3>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="theme" value="自然山海" checked /> 自然山海</label>
+            <label class="chip"><input type="checkbox" name="theme" value="美食夜市" checked /> 美食夜市</label>
+            <label class="chip"><input type="checkbox" name="theme" value="溫泉放鬆" /> 溫泉放鬆</label>
+            <label class="chip"><input type="checkbox" name="theme" value="文青手作" /> 文青手作</label>
+            <label class="chip"><input type="checkbox" name="theme" value="親子農場" /> 親子農場</label>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <h3>交通方式</h3>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="transport" value="開車" checked /> 開車</label>
+            <label class="chip"><input type="radio" name="transport" value="大眾運輸" /> 大眾運輸</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="buildPlan()">產生行程</button>
+        <button class="btn btn-secondary" onclick="resetForm()">重設選項</button>
+      </div>
+
+      <p class="note">
+        建議安排涵蓋礁溪、宜蘭市、羅東、冬山、蘇澳等區域，兼顧移動順暢與遊玩體驗。
+      </p>
+    </section>
+
+    <section class="result" id="result"></section>
+
+    <div class="footer">可依住宿地點再微調每日順序與停留時間。</div>
+  </div>
+
+  <script>
+    const basePlan = {
+      day1: [
+        {
+          time: "上午",
+          title: "抵達宜蘭・礁溪暖身",
+          desc: "先到礁溪溫泉公園或湯圍溝公園散步，若提早到可安排早午餐。",
+          tags: ["礁溪", "輕鬆"]
+        },
+        {
+          time: "中午",
+          title: "礁溪美食",
+          desc: "品嚐甕窯雞、蔥油餅或在地小吃，補足體力。",
+          tags: ["美食"]
+        },
+        {
+          time: "下午",
+          title: "山海景點",
+          desc: "前往五峰旗瀑布、林美石磐步道，或改去外澳、烏石港看海。",
+          tags: ["自然山海"]
+        },
+        {
+          time: "晚上",
+          title: "入住與夜間散策",
+          desc: "入住礁溪或頭城，晚間可逛礁溪街區、泡足湯放鬆。",
+          tags: ["住宿", "溫泉放鬆"]
+        }
+      ],
+      day2: [
+        {
+          time: "上午",
+          title: "宜蘭經典路線",
+          desc: "走訪傳藝中心、幾米公園或宜蘭設治紀念館，感受宜蘭文化。",
+          tags: ["文青手作", "經典"]
+        },
+        {
+          time: "中午",
+          title: "宜蘭市午餐",
+          desc: "選擇櫻桃鴨、卜肉或北門蒜味肉羹等代表性料理。",
+          tags: ["美食夜市"]
+        },
+        {
+          time: "下午",
+          title: "羅東／冬山延伸",
+          desc: "安排冬山河、生態綠舟、梅花湖或農場體驗，適合放慢步調。",
+          tags: ["自然山海", "親子農場"]
+        },
+        {
+          time: "晚上",
+          title: "羅東夜市",
+          desc: "集中品嚐包心粉圓、糕渣、三星蔥等宜蘭小吃。",
+          tags: ["美食夜市", "羅東"]
+        }
+      ],
+      day3: [
+        {
+          time: "上午",
+          title: "蘇澳或海線收尾",
+          desc: "可去南方澳觀景、內埤海灣，或蘇澳冷泉體驗不同風景。",
+          tags: ["自然山海", "海景"]
+        },
+        {
+          time: "中午",
+          title: "海鮮午餐",
+          desc: "在南方澳享用海鮮合菜或簡單漁港料理。",
+          tags: ["美食"]
+        },
+        {
+          time: "下午",
+          title: "伴手禮與返程",
+          desc: "回程前採買奶凍捲、鴨賞、三星蔥餅等宜蘭特色伴手禮。",
+          tags: ["購物", "返程"]
+        }
+      ]
+    };
+
+    const themeAdjustments = {
+      "溫泉放鬆": "晚間改安排溫泉旅宿或湯屋，第二天早晨也可預留泡湯時間。",
+      "文青手作": "第二天下午可增加中興文化創意園區、手作課程或咖啡廳停留。",
+      "親子農場": "第二天下午優先安排張美阿嬤農場、斑比山丘或農事體驗場域。",
+      "自然山海": "若體力充足，第三天可加碼見晴懷古步道或太平山支線，但需提早出發。",
+      "美食夜市": "第一天可加塞頭城阿宗芋冰城或礁溪甜點店，夜間保留宵夜彈性。"
+    };
+
+    const groupTips = {
+      "情侶": "建議挑選景觀咖啡、海景散步與溫泉旅宿，氛圍會更浪漫。",
+      "朋友": "可把夜市與拍照景點比重拉高，行程更有活力。",
+      "親子家庭": "建議保留午休與彈性時間，景點以農場、步道、室內館舍穿插。",
+      "長輩同行": "建議減少長距離步道，改以溫泉、公園、觀景台與美食為主。"
+    };
+
+    const transportTips = {
+      "開車": "開車最方便串連礁溪、冬山、蘇澳與山區景點，時間彈性最高。",
+      "大眾運輸": "建議優先安排礁溪、宜蘭市、羅東與蘇澳火車站周邊景點，轉乘更順暢。"
+    };
+
+    function getSelected(name) {
+      const checked = document.querySelector(`input[name='${name}']:checked`);
+      return checked ? checked.value : "";
+    }
+
+    function getThemes() {
+      return Array.from(document.querySelectorAll("input[name='theme']:checked")).map((el) => el.value);
+    }
+
+    function renderDay(title, items) {
+      return `
+        <div class="day">
+          <h3>${title}</h3>
+          ${items
+            .map(
+              (item) => `
+                <div class="spot">
+                  <strong>${item.time}｜${item.title}</strong><br />
+                  ${item.desc}<br />
+                  ${item.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+                </div>
+              `
+            )
+            .join("")}
+        </div>
+      `;
+    }
+
+    function buildPlan() {
+      const pace = getSelected("pace");
+      const group = getSelected("group");
+      const transport = getSelected("transport");
+      const themes = getThemes();
+      const result = document.getElementById("result");
+      const plans = JSON.parse(JSON.stringify(basePlan));
+
+      if (pace === "經典踩點") {
+        plans.day1[2].desc = "前往外澳、烏石港後銜接蘭陽博物館，快速掌握海線與地景特色。";
+        plans.day2[0].desc = "優先安排傳藝中心、幾米公園與宜蘭酒廠等熱門地標。";
+      }
+
+      if (pace === "親子悠閒") {
+        plans.day1[2].desc = "改安排較輕鬆的公園、海邊散步或親子館，避免太緊湊。";
+        plans.day3[0].desc = "第三天可安排較短距離海灣散步，保留返程餘裕。";
+      }
+
+      if (group === "長輩同行") {
+        plans.day1[2].desc = "改以蘭陽博物館、伯朗咖啡館頭城城堡館或景觀點為主，減少爬坡。";
+      }
+
+      if (transport === "大眾運輸") {
+        plans.day2[2].desc = "以羅東林業文化園區、冬山河親水公園或車站周邊景點為主，減少轉乘壓力。";
+      }
+
+      const customNotes = themes.map((theme) => themeAdjustments[theme]).filter(Boolean);
+
+      result.innerHTML = `
+        <h2>你的宜蘭三天兩夜建議行程</h2>
+        <div class="summary">
+          <strong>旅遊設定：</strong>${pace}／${group}／${transport}<br />
+          <strong>偏好主題：</strong>${themes.length ? themes.join("、") : "未指定"}<br />
+          <strong>行程提醒：</strong>${groupTips[group]} ${transportTips[transport]}
+        </div>
+        ${renderDay("Day 1｜礁溪、頭城", plans.day1)}
+        ${renderDay("Day 2｜宜蘭市、羅東、冬山", plans.day2)}
+        ${renderDay("Day 3｜蘇澳、南方澳、返程", plans.day3)}
+        <div class="summary">
+          <strong>依偏好加強建議：</strong><br />
+          ${
+            customNotes.length
+              ? customNotes.map((note) => `• ${note}`).join("<br />")
+              : "• 目前設定已是均衡型路線，可直接使用。"
+          }
+        </div>
+      `;
+    }
+
+    function resetForm() {
+      document.querySelector("input[name='pace'][value='輕鬆慢遊']").checked = true;
+      document.querySelector("input[name='group'][value='情侶']").checked = true;
+      document.querySelector("input[name='transport'][value='開車']").checked = true;
+
+      document.querySelectorAll("input[name='theme']").forEach((el, index) => {
+        el.checked = index < 2;
+      });
+
+      buildPlan();
+    }
+
+    buildPlan();
+  </script>
+</body>
+</html>
